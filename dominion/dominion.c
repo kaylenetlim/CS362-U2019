@@ -223,7 +223,7 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 		{
 			if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
 			{
-				// add ug here, remove discardCard(i, currentPlayer, state, 1); making the card not discarded
+				// add bug here, remove discardCard(i, currentPlayer, state, 1); making the card not discarded
 				break;
 			}
 		}
