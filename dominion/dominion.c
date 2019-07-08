@@ -38,12 +38,11 @@ int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
 //Refactored functions for Assignment 2
 */
 
-int refactBaron(struct gameState *state) {
+int refactBaron(int choice1, struct gameState *state) {
 
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
 
-	int tributeRevealedCards[2] = { -1, -1 };
 	if (nextPlayer > (state->numPlayers - 1)) {
 		nextPlayer = 0;
 	}
@@ -107,7 +106,6 @@ int refactMinion(int choice1, int choice2, struct gameState *state, int handPos)
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
 
-	int tributeRevealedCards[2] = { -1, -1 };
 	if (nextPlayer > (state->numPlayers - 1)) {
 		nextPlayer = 0;
 	}
@@ -171,7 +169,6 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
 
-	int tributeRevealedCards[2] = { -1, -1 };
 	if (nextPlayer > (state->numPlayers - 1)) {
 		nextPlayer = 0;
 	}
@@ -313,7 +310,6 @@ int refactMine(int choice1, int choice2, struct gameState *state, int handPos) {
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
 
-	int tributeRevealedCards[2] = { -1, -1 };
 	if (nextPlayer > (state->numPlayers - 1)) {
 		nextPlayer = 0;
 	}
@@ -995,7 +991,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 	  ////// REFACTED //////
 	case baron:
-	  refactBaron(state);
+	  refactBaron(choice1, state);
 
 	  ////// REFACTED //////
 	case minion:
