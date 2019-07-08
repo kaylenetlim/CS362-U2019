@@ -209,7 +209,7 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 	{
 		if (i != currentPlayer)
 		{
-			gainCard(state->hand[currentPlayer][choice1], state, i);   // add bug here, mismatched num of arguments will cause program to crash
+			gainCard(state->hand[currentPlayer][choice1], state, 0, i);   // add bug here, mismatched num of arguments will cause program to crash
 		}
 	}
 
