@@ -47,13 +47,13 @@ int refactBaron(int choice1, struct gameState *state) {
 		nextPlayer = 0;
 	}
 
-	state->numBuys++;//Increase buys by 1!
+	state->numBuys--;//Increase buys by 1!, add bug here, decrememnt number of buys rather than increment
 	if (choice1 > 0) {//Boolean true or going to discard an estate
 		int p = 0;//Iterator for hand!
 		int card_not_discarded = 1;//Flag for discard set!
 		while (card_not_discarded) {
 			if (state->hand[currentPlayer][p] == estate) {//Found an estate card!
-				state->coins += 4;//Add 4 coins to the amount of coins
+				// add bug here, remove addition of +4 coins when baron card is 
 				state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][p];
 				state->discardCount[currentPlayer]++;
 				for (; p < state->handCount[currentPlayer]; p++) {
@@ -104,7 +104,7 @@ int refactMinion(int choice1, int choice2, struct gameState *state, int handPos)
 	int j;
 
 	int currentPlayer = whoseTurn(state);
-	int nextPlayer = currentPlayer + 1;
+	int nextPlayer = currentPlayer;  // add bug here, nextPlayer does not actually go to next player
 
 	if (nextPlayer > (state->numPlayers - 1)) {
 		nextPlayer = 0;
@@ -140,7 +140,7 @@ int refactMinion(int choice1, int choice2, struct gameState *state, int handPos)
 		{
 			if (i != currentPlayer)
 			{
-				if (state->handCount[i] > 4)
+				if (state->handCount[i] > 5)  // add bug here, changed 4 to 5
 				{
 					//discard hand
 					while (state->handCount[i] > 0)
@@ -163,6 +163,7 @@ int refactMinion(int choice1, int choice2, struct gameState *state, int handPos)
 }
 
 int refactAmbassador(int choice1, int choice2, struct gameState *state, int handPos) {
+	
 	int i;
 	int j;
 
@@ -208,7 +209,7 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 	{
 		if (i != currentPlayer)
 		{
-			gainCard(state->hand[currentPlayer][choice1], state, 0, i);
+			gainCard(state->hand[currentPlayer][choice1], state, i);   // add bug here, mismatched num of arguments will cause program to crash
 		}
 	}
 
@@ -222,7 +223,7 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 		{
 			if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
 			{
-				discardCard(i, currentPlayer, state, 1);
+				// add ug here, remove discardCard(i, currentPlayer, state, 1); making the card not discarded
 				break;
 			}
 		}
@@ -234,6 +235,7 @@ int refactAmbassador(int choice1, int choice2, struct gameState *state, int hand
 int refactTribute(struct gameState *state) {
 
 	int i;
+	int j; // add bug here, variable declaration not needed
 
 	int currentPlayer = whoseTurn(state);
 	int nextPlayer = currentPlayer + 1;
@@ -269,7 +271,7 @@ int refactTribute(struct gameState *state) {
 				state->discardCount[nextPlayer]--;
 			}
 
-			shuffle(nextPlayer, state);//Shuffle the deck
+			shuffle(currentPlayer, state);//Shuffle the deck   // add bug here, current player rather than next player
 		}
 		tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer] - 1];
 		state->deck[nextPlayer][state->deckCount[nextPlayer]--] = -1;
@@ -321,7 +323,7 @@ int refactMine(int choice1, int choice2, struct gameState *state, int handPos) {
 		return -1;
 	}
 
-	if (choice2 > treasure_map || choice2 < curse)
+	if (choice2 > treasure_map || choice2 < treasure_map)
 	{
 		return -1;
 	}
@@ -331,10 +333,11 @@ int refactMine(int choice1, int choice2, struct gameState *state, int handPos) {
 		return -1;
 	}
 
-	gainCard(choice2, state, 2, currentPlayer);
 
 	//discard card from hand
 	discardCard(handPos, currentPlayer, state, 0);
+
+	gainCard(choice2, state, 2, currentPlayer);
 
 	//discard trashed card
 	for (i = 0; i < state->handCount[currentPlayer]; i++)
