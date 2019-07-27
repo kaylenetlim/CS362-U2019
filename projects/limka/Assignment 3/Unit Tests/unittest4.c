@@ -12,20 +12,35 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <assert.h>
+
+#define SEED 100
 
 int main(){
 
-   struct gameState* teststate;
+   // Initializes variables and initialize game
+ 
+   int numPlayers = 2;
 
-   printf("\n--- UNIT TEST 4: refactTribute ---\n");
+   struct gameState teststate;
+   
+   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy, council_room};
 
-   // Test if action points increased
+   memset(&teststate, 'z', sizeof(struct gameState));
+
+   initializeGame(numPlayers, k, SEED, &teststate);
+
+   int testrun = refactTribute(&teststate); // obtain the return value of the function
+
+   // Begin testing
+  printf("\n=== UNIT TEST 4: refactTribute ===\n");
+
+
+   // Test if action points increased 
    printf("\n>>> Testing action points... ");
+      
+   teststate.numActions = 4;
 
-   teststate->numActions = 4;
-   refactTribute(teststate);
-   if(teststate->numActions > 4){
+   if(teststate.numActions > 4){
       printf("PASSED... action points are increased\n");
    }else{
       printf("FAILED... action points are not increased\n");
@@ -34,17 +49,26 @@ int main(){
    // Test if coins are increased
    printf("\n>>> Testing coin increased... ");
 
-   teststate->coins = 4;
-   if(teststate->coins > 4){
+   teststate.coins = 4;
+
+   if(teststate.coins > 4){
       printf("PASSED... coins are increased\n");
    }else{
       printf("FAILED... coins are not increased\n");
    }
 
-   // Verify current player
-   // Test if cards are revealed
-   // Test if card properly discarded
-   // Test if deck count is correct
+   // Test if function runs properly
+   printf("\n>>> Testing if function runs properly... ");
+
+   if(testrun == 0){
+      printf("PASSED... function runs properly\n");
+   }else{
+      printf("FAILED... error in running function\n");
+   }
+
+   // End testing
+   printf("\n=== END OF TESTING for refactTribute ===\n\n"); 
+
 
    return 0;
 }

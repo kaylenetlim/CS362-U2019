@@ -14,67 +14,72 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#define SEED 100
+
 int main(){
 
+   // Initializes variables and initialize game
+ 
    int choice1 = 0;
    int choice2 = 0;
-   struct gameState* teststate;
-   int handPos =0;
+   int handPos = 0;
+   int numPlayers = 2;
 
-   printf("\n--- UNIT TEST 2: refactMinion ---\n");
+   struct gameState teststate;
+   
+   int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy, council_room};
 
-   /*
-   // Test next player
-   printf("\n>>> Testing if next player is really next player... ");
+   memset(&teststate, 'z', sizeof(struct gameState));
 
-   refactMinion(choice1, choice2, teststate, handPos);
+   initializeGame(numPlayers, k, SEED, &teststate);
 
-   if(teststate->numPlayers > 1){
-      if(whoseTurn(&teststate)){
-	 printf("PASSED... turn passes on to next player\n");
-      }else{
-	 printf("FAILED... turn does not pass to next player\n");
-      }
-   }else{
-      printf("FAILED... next player is not next player\n");
-   }
+   int testrun = refactMinion(choice1, choice2, &teststate, handPos); // obtain the return value of the function
 
-   // Test redraw when hand size > 4
-   printf("\n>>> Testing if hand size is greater than 4... ");
 
-   for(int i=4; i < state->numPlayers; i++){
-	if(state->handCount[i] > 0){
-	   printf("FAILED... drawing when hand size other than greater than 4\n");
-	}else{
-	   printf("PASSED... drawing when hand size is greater than 4\n");
-	}
-*/
-  
-   // Test action increases
-   printf("\n>>> Testing if action points are increased... ");
-
-   teststate->numActions = 4;
-
-   refactMinion(choice1, choice2, teststate, handPos);
-
-   if(teststate->numActions > 4){
-      printf("PASSED... action points increase\n");
-   }else{
-      printf("FAILED... action points did not increase\n");
-   }
-
+   printf("\n=== UNIT TEST 2: refactMinion ===\n"); 
+   
    // Test coin increase
    printf("\n>>> Testing if coin increases... ");
 
+   teststate.coins = 4;
    choice1 = 1;
-   teststate->coins = 4;
 
-   refactMinion(choice1, choice2, teststate, handPos);
-
-   if(teststate->coins > 4){
+   if(teststate.coins > 4){
       printf("PASSED... coin amount increased\n");
    }else{
       printf("FAILED... coin amount did not increase\n");
    }
 
+   // Test action increases
+   printf("\n>>> Testing if action points are increased... ");
+
+   teststate.numActions = 4;
+
+   if(teststate.numActions > 4){
+      printf("PASSED... action points increase\n");
+   }else{
+      printf("FAILED... action points did not increase\n");
+   }
+
+   // Test redraw when hand size > 4
+   printf("\n>>> Testing if hand size is greater than 4... ");
+   
+   if(teststate.handCount[4] > 0){
+	printf("FAILED... drawing when hand size other than greater than 4\n");
+   }else{
+	printf("PASSED... drawing when hand size is greater than 4\n");
+   }
+   
+   // Test if function runs properly
+   printf("\n>>> Testing if function runs... ");
+   
+   if(testrun == 0){
+      printf("PASSED... function runs\n");
+   }else{
+      printf("FAILED... error in running function\n");
+   }
+
+   printf("\n=== END OF TESTING for refactMinion ===\n\n");
+
+   return 0;
 }
