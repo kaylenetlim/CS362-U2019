@@ -134,10 +134,10 @@ randomtestresults: randomtestcard1.c randomtestcard2.c randomtestcard3.c
 	./randomtestcard2 >> randomtestresults.out
 	gcov dominion.c -b -f >> randomtestresults.out
 
-	#echo "randomtestcard3.c:" >> unittestresults.out
-	#gcc -o randomtestcard3 -g randomtestcard3.c dominion.o rngs.o $(CFLAGS)
-	#./randomtestcard3 >> randomtestresults.out
-	#gcov dominion.c -b -f >> randomtestresults.out
+	echo "randomtestcard3.c:" >> unittestresults.out
+	gcc -o randomtestcard3 -g randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard3 >> randomtestresults.out
+	gcov dominion.c -b -f >> randomtestresults.out
 
 randomtestcard1: randomtestcard1.c
 	echo "randomtestcard1.c" 
