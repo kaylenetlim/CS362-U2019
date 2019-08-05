@@ -39,7 +39,7 @@ char *inputString()
     }else{
     	// populate string with random characters
        for(int i = 0; i < str_len - 1; i++){
-          choice = rand() % 9;
+          choice = rand() % 13;
           c = pool[choice];
           str[i] = c;
        }
