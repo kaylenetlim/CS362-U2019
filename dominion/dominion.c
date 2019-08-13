@@ -998,7 +998,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	}
 	else{
 	  //No Card to Reveal
-	  if (DEBUG){
+	  if (state->discardCount[nextPlayer] == 0){
 	    printf("No cards to reveal\n");
 	  }
 	}
